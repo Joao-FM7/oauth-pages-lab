@@ -288,7 +288,12 @@ export async function onRequestGet(context) {
       status: 302,
       headers
     });
-  } catch {
+  } catch (error) {
+    console.log(
+      "OAUTH_ERROR:",
+      error instanceof Error ? error.message : "unknown"
+    );
+
     return failure("Authentication failed.");
   }
 }
