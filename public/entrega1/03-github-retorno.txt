@@ -1,0 +1,5 @@
+Homepage URL:
+https://oauth-pages-lab-19g.pages.dev
+
+Authorization callback URL:
+https://oauth-pages-lab-19g.pages.dev/oauth/callback/github
