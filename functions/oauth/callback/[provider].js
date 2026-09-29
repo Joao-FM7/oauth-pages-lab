@@ -114,7 +114,7 @@ async function exchangeGitHub(config, code, verifier) {
   }
 
   return response.json();
-}
+
 
 export async function onRequestGet(context) {
   const provider = context.params.provider;
