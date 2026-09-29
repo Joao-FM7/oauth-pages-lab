@@ -76,6 +76,39 @@ async function exchangeGitHub(config, code, verifier) {
     body
   });
 
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      `github_token_http_${response.status}`
+    );
+  }
+
+  if (data.error) {
+    throw new Error(
+      `github_token_error_${data.error}`
+    );
+  }
+
+  return data;
+}
+  const body = new URLSearchParams();
+
+  body.set("client_id", config.clientId);
+  body.set("client_secret", config.clientSecret);
+  body.set("code", code);
+  body.set("redirect_uri", config.redirectUri);
+  body.set("code_verifier", verifier);
+
+  const response = await fetch(config.tokenUrl, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body
+  });
+
   if (!response.ok) {
     throw new Error("token_exchange_failed");
   }
