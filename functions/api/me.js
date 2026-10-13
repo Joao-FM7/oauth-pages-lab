@@ -64,3 +64,8 @@ export async function onRequestGet(context) {
     }
   );
 }
+
+// Exercicio da Tarefa 3: auxiliar ainda nao conectado a rota publica.
+async function buscarNotasPorAluno(env, nome) {
+  return env.DB.prepare(`SELECT * FROM notas WHERE aluno = '${nome}'`).all();
+}
