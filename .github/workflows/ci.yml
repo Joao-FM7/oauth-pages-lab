@@ -12,12 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+
       - name: Procura segredos versionados
         run: |
-          if git grep -nE "GOCSPX-|client_secret *= *['\"][^'\"]+" -- . ':!*.md'; then
+          if git grep -qE "GO[C]SPX-|client_secret *= *['\"][^'\"]+" -- . ':!*.md'; then
             echo "::error::Possível segredo no repositório"
             exit 1
           fi
+
 
       - name: Aplica as migrações D1 em um SQLite local
         run: |
