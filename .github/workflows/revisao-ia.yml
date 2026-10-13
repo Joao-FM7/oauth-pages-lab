@@ -27,7 +27,7 @@ jobs:
             echo '```'
           } > prompt.txt
       - id: ia
-        uses: actions/ai-inference@v1
+        uses: actions/ai-inference@41caef41a74eb26f6d0c6b1e9941d691588e0b2b # Versao oficial com Copilot CLI
         env:
           COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
         with:
