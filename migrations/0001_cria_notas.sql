@@ -1,0 +1,5 @@
+
+CREATE TABLE IF NOT EXISTS notas (
+    id INTEGER PRIMARY KEY,
+    aluno TEXT NOT NULL
+);
