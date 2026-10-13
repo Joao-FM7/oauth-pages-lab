@@ -1,1 +1,6 @@
 
+[[d1_databases]]
+binding = "DB"
+database_name = "oauth-sessions-unishift"
+database_id = "19e74426-99eb-4e65-a062-7df35647118c"
+
