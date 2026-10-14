@@ -79,7 +79,7 @@ Workflow: [`.github/workflows/migrar.yml`](.github/workflows/migrar.yml), config
 
 A coluna `nota REAL` foi confirmada no D1 remoto.
 
-**Segundo merge sem alterações em `migrations/`:** PENDENTE DE COMPROVAÇÃO. O Pull Request de entrega modificará somente este `AVALIACAO.md`. Depois do merge, será necessário confirmar no [histórico do workflow `migrar`](https://github.com/Joao-FM7/oauth-pages-lab/actions/workflows/migrar.yml) que nenhuma nova execução foi disparada e acrescentar o link do PR dessa confirmação à documentação final.
+**Segundo merge sem alterações em `migrations/`:** COMPROVADO. O [Pull Request #2 — entrega da avaliação](https://github.com/Joao-FM7/oauth-pages-lab/pull/2) alterou somente o arquivo `AVALIACAO.md` e foi integrado à `main`. Após esse segundo merge, o [histórico do workflow `migrar`](https://github.com/Joao-FM7/oauth-pages-lab/actions/workflows/migrar.yml) continuou mostrando **apenas 1 execução**, correspondente ao merge do PR #1 ([execução #1](https://github.com/Joao-FM7/oauth-pages-lab/actions/runs/38577979203)); nenhuma execução foi disparada pelo PR #2. Assim, ficou comprovado que o filtro `paths: ['migrations/**']` impediu a execução quando só a documentação foi alterada.
 
 ## Bônus — Resumo das migrações por IA
 
