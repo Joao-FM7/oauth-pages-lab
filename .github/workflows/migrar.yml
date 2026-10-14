@@ -1,0 +1,56 @@
+
+name: migrar
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'migrations/**'
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Instala Copilot CLI
+        run: npm install -g @github/copilot
+
+      - name: Aplica migracoes no D1 remoto
+        run: |
+          set -o pipefail
+          npx --yes wrangler d1 migrations apply oauth-sessions-unishift --remote | tee migracoes.log
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Prepara prompt do resumo
+        run: |
+          {
+            echo "Resuma em portugues as migracoes D1 executadas."
+            echo "Informe quais arquivos foram aplicados e o resultado."
+            echo "Nao invente informacoes ausentes no log."
+            echo '```text'
+            cat migracoes.log
+            echo '```'
+          } > resumo-prompt.txt
+
+      - name: Gera resumo com IA
+        id: ia
+        uses: actions/ai-inference@41caef41a74eb26f6d0c6b1e9941d691588e0b2b
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+        with:
+          prompt-file: resumo-prompt.txt
+          system-prompt: Voce e um assistente que resume migracoes de banco de dados.
+          model: ""
+
+      - name: Publica resumo no GitHub Actions
+        run: |
+          echo "## Resumo das migracoes D1" >> "$GITHUB_STEP_SUMMARY"
+          cat "${{ steps.ia.outputs.response-file }}" >> "$GITHUB_STEP_SUMMARY"
